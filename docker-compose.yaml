@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  service:
+    container_name: jwt_auth_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+#    links:
+#      - mongodb
+#    depends_on:
+#      - mongodb
+    env_file:
+      .env
+#
+#  mongodb:
+#    image: mongo
+#    container_name: auth_service_mongodb
+#    restart: unless-stopped
+#    env_file:
+#      .env
+#    ports:
+#      - ${MONGO_PORT}:${MONGO_PORT}
+#    volumes:
+#      - mongodb:/data/db
+#
+#  redis:
+#    image: redis:alpine
+#    container_name: auth_service_redis
+#    ports:
+#     - ${REDIS_PORT}:${REDIS_PORT}
+#    volumes:
+#      - redisDB:/data
+#
+#volumes:
+#  mongodb:
+#  redisDB:
