@@ -10,7 +10,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app ./cmd/main.go
 
-FROM alpine:latest
+FROM alpine
 
 WORKDIR /app
 
@@ -21,4 +21,4 @@ RUN rm -rf /var/cache/apk/* && \
     rm -rf /tmp/* && \
     rm -rf /var/log/*
 
-ENTRYPOINT ["./app"]
+CMD ["./app"]

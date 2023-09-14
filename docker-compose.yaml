@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   service:
@@ -9,32 +9,21 @@ services:
     restart: unless-stopped
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-#    links:
-#      - mongodb
-#    depends_on:
-#      - mongodb
+    depends_on:
+      - mongodb
     env_file:
       .env
-#
-#  mongodb:
-#    image: mongo
-#    container_name: auth_service_mongodb
-#    restart: unless-stopped
-#    env_file:
-#      .env
-#    ports:
-#      - ${MONGO_PORT}:${MONGO_PORT}
-#    volumes:
-#      - mongodb:/data/db
-#
-#  redis:
-#    image: redis:alpine
-#    container_name: auth_service_redis
-#    ports:
-#     - ${REDIS_PORT}:${REDIS_PORT}
-#    volumes:
-#      - redisDB:/data
-#
-#volumes:
-#  mongodb:
-#  redisDB:
+
+  mongodb:
+    image: mongo
+    container_name: jwt_auth_service_mongodb
+    restart: always
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    volumes:
+      - mongodb-data:/data/db
+    env_file:
+      - .env
+
+volumes:
+  mongodb-data:
