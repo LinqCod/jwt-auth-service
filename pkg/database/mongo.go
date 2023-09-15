@@ -12,10 +12,10 @@ import (
 
 type MongoDb struct {
 	ctx    context.Context
-	client *mongo.Client
+	Client *mongo.Client
 }
 
-func ConnectToMongoDb(ctx context.Context) (*MongoDb, error) {
+func NewMongoDb(ctx context.Context) (*MongoDb, error) {
 	host := viper.GetString("MONGODB_HOST")
 	port := viper.GetString("MONGODB_PORT")
 
@@ -34,16 +34,16 @@ func ConnectToMongoDb(ctx context.Context) (*MongoDb, error) {
 
 	return &MongoDb{
 		ctx:    ctx,
-		client: mongoClient,
+		Client: mongoClient,
 	}, nil
 }
 
 func (db *MongoDb) Close() {
-	if db.client == nil {
+	if db.Client == nil {
 		log.Fatalf("error while closing db: %v", errors.New("mongo client is nil"))
 	}
 
-	err := db.client.Disconnect(db.ctx)
+	err := db.Client.Disconnect(db.ctx)
 	if err != nil {
 		log.Fatalf("error while closing db: %v", err)
 	}

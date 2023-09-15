@@ -21,4 +21,6 @@ RUN rm -rf /var/cache/apk/* && \
     rm -rf /tmp/* && \
     rm -rf /var/log/*
 
+EXPOSE 8080
+
 CMD ["./app"]
