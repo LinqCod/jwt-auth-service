@@ -43,3 +43,15 @@ func (r AuthRepository) SaveRefreshToken(guid, token string, expiredAt time.Time
 
 	return nil
 }
+
+func (r AuthRepository) GetRefreshTokenByGUID(guid string) (*model.RefreshToken, error) {
+	var refreshToken model.RefreshToken
+
+	filter := bson.D{{"guid", guid}}
+	err := r.collection.FindOne(r.ctx, filter).Decode(&refreshToken)
+	if err != nil {
+		return nil, fmt.Errorf("error while getting refresh token by guid: %v", err)
+	}
+
+	return &refreshToken, nil
+}

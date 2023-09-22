@@ -3,11 +3,16 @@ package model
 import "time"
 
 type RefreshToken struct {
-	GUID         string    `json:"GUID"`
+	GUID         string    `json:"guid"`
 	RefreshToken string    `json:"refresh_token"`
 	Ttl          time.Time `json:"ttl"`
 }
 
-func (t RefreshToken) isExpired() bool {
-	return t.Ttl.After(time.Now())
+type RefreshTokenRequest struct {
+	GUID         string `json:"guid"`
+	RefreshToken string `json:"refresh_token"`
+}
+
+func (t RefreshToken) IsExpired() bool {
+	return t.Ttl.Before(time.Now())
 }
